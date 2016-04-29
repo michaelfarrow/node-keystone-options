@@ -8,7 +8,7 @@ var keystone;
 
 options.middleware = function(req, res, next){
   Option.model.find({}, function(err, options) {
-    keystone.set('options', options);
+    keystone.set('options-cached', options);
     next();
   });
 };
@@ -20,6 +20,15 @@ options.has = function(key){
 options.get = function(key){
   return Option.fetch(key);
 };
+
+options.set  = function(key, value, callback){
+  var option = new Option.model({
+    key: key,
+  });
+
+  option[Option.valueField(key)] = value;
+  option.save(callback);
+}
 
 options.init = function(app){
   keystone = app;

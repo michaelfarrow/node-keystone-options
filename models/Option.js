@@ -34,12 +34,10 @@ _.each(config, function(optionList, type){
     var fieldHash = 'value' + type + '_' + hash(fieldOptions);
 
     // push option key to all options array
-    allOptions.push(optionKey);
+    allOptions.push({ value: optionKey, label: optionKey });
 
     // add option key to field map, mapping field to value field
-    fieldMap[optionKey] = {
-      valueField: fieldHash,
-    };
+    fieldMap[optionKey] = fieldHash;
 
     // if field doesn't already exist in all fields array, create it, adding custom options
     if(!allFields[fieldHash])
@@ -72,21 +70,25 @@ Option.schema.pre('validate', function(next) {
 
 // fetch correct value for option
 Option.schema.methods.value = function () {
-  return this[fieldMap[this.key].valueField];
+  return this[Option.valueField(this.key)];
 };
 
 // fetch correct underscore methods
 Option.schema.methods.value_ = function () {
-  return this._[fieldMap[this.key].valueField];
+  return this._[Option.valueField(this.key)];
 };
 
 Option.track = true;
 Option.defaultColumns = 'key';
 Option.register();
 
+Option.valueField = function(option){
+  return fieldMap[option] || null;
+}
+
 Option.fetch = function(option){
-  if(fieldMap[option]){
-    var options = keystone.get('options');
+  if(Option.valueField(option)){
+    var options = keystone.get('options-cached');
     var found = _.find(options, {key: option});
 
     if(found)
