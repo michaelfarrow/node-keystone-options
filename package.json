@@ -1,6 +1,6 @@
 {
   "name": "keystone-options",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Global site options for Keystone.js",
   "main": "index.js",
   "scripts": {

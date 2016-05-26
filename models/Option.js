@@ -50,7 +50,7 @@ _.each(config, function(optionList, type){
 
 });
 
-fields.key = { type: Types.Select, label: 'Option', options: allOptions.sort(), required: true, initial: true, index: true },
+fields.key = { type: Types.Select, label: 'Option', options: _.sortBy(allOptions, function(o) { return o.label; }), required: true, initial: true, index: true },
 fields = _.merge(fields, allFields);
 
 Option.add(fields);
