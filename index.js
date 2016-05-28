@@ -21,6 +21,14 @@ options.get = function(key){
   return Option.fetch(key);
 };
 
+options.value = function(key, noVal){
+  if(options.has(key)){
+    return options.get(key).value();
+  }else{
+    return noVal;
+  }
+};
+
 options.set  = function(key, value, callback){
   var option = new Option.model({
     key: key,
