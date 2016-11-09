@@ -86,14 +86,23 @@ Option.valueField = function(option){
   return fieldMap[option] || null;
 }
 
-Option.fetch = function(option){
+Option.fetch = function(option, callback){
   if(Option.valueField(option)){
-    var options = keystone.get('options-cached');
-    var found = _.find(options, {key: option});
+    if(callback) {
+      return Option.model.findOne()
+        .where('key', option)
+        .exec(function(err, o) {
+          if(err) return callback(err);
+          callback(null, o ? o : null);
+        });
+    } else {
+      var options = keystone.get('options-cached');
+      var found = _.find(options, {key: option});
 
-    if(found)
-      return found;
+      if(found)
+        return found;
+    }
   }
 
-  return null;
+  return callback ? callback(null, null) : null;
 };

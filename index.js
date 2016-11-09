@@ -17,8 +17,8 @@ options.has = function(key){
   return !_.isNull(options.get(key));
 };
 
-options.get = function(key){
-  return Option.fetch(key);
+options.get = function(key, callback){
+  return Option.fetch(key, callback);
 };
 
 options.value = function(key, noVal){
