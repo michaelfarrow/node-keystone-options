@@ -68,6 +68,11 @@ Option.schema.pre('validate', function(next) {
   });
 });
 
+// set value for option
+Option.schema.methods.setValue = function (val) {
+  this[Option.valueField(this.key)] = val;
+};
+
 // fetch correct value for option
 Option.schema.methods.value = function () {
   return this[Option.valueField(this.key)];
