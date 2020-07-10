@@ -12,7 +12,7 @@
     "keystone": ">=0.3.17"
   },
   "dependencies": {
-    "lodash": "4.2.0",
+    "lodash": "4.17.16",
     "object-hash": "1.1.2",
     "node-cache": "4.1.1"
   }
